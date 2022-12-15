@@ -26,6 +26,8 @@ class GenerateRoutesCommand extends Command
 
         if ($this->option('publish')) {
             $this->publishHelper();
+
+            $this->info('Published the TypeScript helper');
         }
 
         $this->table(
