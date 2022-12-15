@@ -1,0 +1,41 @@
+#!/bin/bash
+set -e
+
+offer_run() {
+    read -p "For more output, run $1. Run it now (Y/n)? " run
+
+    case ${run:0:1} in
+        n|N )
+            exit 1
+        ;;
+        * )
+            $1
+        ;;
+    esac
+
+    exit 1
+}
+
+if (./vendor/bin/pint > /dev/null 2>/dev/null); then
+    echo '✅ Pint OK'
+else
+    echo '❌ Pint FAIL'
+    offer_run './vendor/bin/pint'
+fi
+
+if (./vendor/bin/phpstan analyse > /dev/null 2>/dev/null); then
+    echo '✅ PHPStan OK'
+else
+    echo '❌ PHPStan FAIL'
+    offer_run './vendor/bin/phpstan analyse'
+fi
+
+if (./vendor/bin/pest > /dev/null 2>/dev/null); then
+    echo '✅ PEST OK'
+else
+    echo '❌ PEST FAIL'
+    offer_run './vendor/bin/pest'
+fi
+
+echo '=================='
+echo '✅ Everything OK'
