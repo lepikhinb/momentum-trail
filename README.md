@@ -51,7 +51,11 @@ const submit = () => form.put(route("profile.settings.update"))
 </script>
 
 <template>
-  <a :class="[current('users.*') ? 'text-black' : 'text-gray-600']" :href="route('users.index')"> Users </a>
+  <a
+    :class="[current('users.*') ? 'text-black' : 'text-gray-600']"
+    :href="route('users.index')">
+    Users
+  </a>
 </template>
 ```
 
@@ -114,7 +118,3 @@ Momentum is a set of packages designed to bring back the feeling of working on a
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-```
-
-```
