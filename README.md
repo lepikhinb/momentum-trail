@@ -90,7 +90,7 @@ Import the helper in your `.vue` files and enjoy perfect autocompletion and type
 
 ```vue
 <script lang="ts" setup>
-import { route, current } from "@/scripts/utils/route"
+import { route, current } from "momentum-trail"
 
 const submit = () => form.put(route("profile.settings.update"))
 </script>
