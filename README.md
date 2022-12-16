@@ -1,19 +1,22 @@
 # Momentum Trail
 
-Momentum Trail is an **opinionated** Laravel package that provides a TypeScript `route()` helper function that works like Laravel's, making it easy to use your Laravel named routes in TypeScript with auto-completion and type-safety.
+Momentum Trail is a Laravel package that provides a TypeScript `route()` helper function that works like Laravel's, making it easy to use your Laravel named routes in TypeScript with auto-completion and type-safety.
+
+- [**Installation**](#installation)
+  - [**Laravel**](#laravel)
+  - [**Vue 3**](#vue-3)
+- [**Usage**](#usage)
+- [**Auto-generation**](#auto-generation)
+- [**Advanced Inertia**](#advanced-inertia)
+- [**Momentum**](#momentum)
 
 ## Installation
 
+### Laravel
 Install the package using `composer`.
 
 ```bash
 composer require based/momentum-trail
-```
-
-The package is built on top of [Ziggy](https://github.com/tighten/ziggy). Since the TypeScript helper relies on generated JSON and is not published as a dedicated `npm` package, you may need to install `Ziggy` manually.
-
-```bash
-npm install ziggy-js
 ```
 
 You can publish the config file with:
@@ -26,22 +29,64 @@ This is the contents of the published config file:
 
 ```php
 return [
-    'path' => resource_path('scripts/utils/route'),
+    'output' => [
+        'routes' => resource_path('scripts/routes/routes.json'),
+        'typescript' => resource_path('scripts/types/routes.d.ts'),
+    ],
 ];
-
 ```
 
-Set the `path` according to your directory structure (`js/route`). Please make sure to specify a dedicated directory for helpers.
+Set the paths according to your directory structure. You can set the `routes` path to `null` in case you plan to use the `Blade` directive instead of importing JSON.
+
+### Vue 3
+
+> The frontend package is only for Vue 3 now due to its wide adoption within the Laravel community.
+
+Install the [frontend package](https://github.com/lepikhinb/momentum-trail-helper).
+
+```bash
+npm i momentum-trail
+# or
+yarn add momentum-trail
+```
 
 ## Usage
 
-Run the following command to publish the TypeScript helper and make your routes available on the frontend.
+Run the following command to generate TypeScript declarations and make your routes available on the frontend.
 
 ```php
-php artisan trail:generate --publish
+php artisan trail:generate
 ```
 
-Import the published helper in your `.ts`/`.vue`/`.tsx` files and enjoy perfect autocompletion and type-safety for both `route` and `current` methods.
+Set up the `trail` plugin. You can either import the generated JSON definition and pass it to the plugin or use the `@trail` Blade directive and leave options empty.
+
+```ts
+import { trail } from "momentum-trail"
+import routes from "./routes.json"
+
+createInertiaApp({
+  setup({ el, app, props, plugin }) {
+    createApp({ render: () => h(app, props) })
+      .use(trail, { routes })
+      // or
+      .use(trail)
+  }
+})
+```
+
+Optionally, add the `@trail` Blade directive to your main layout (before your application's JavaScript).
+
+> By default, the output of the @trail Blade directive includes a list of all your application's routes and their parameters. This route list is included in the HTML of the page and can be viewed by end users.
+
+```html
+<html>
+<head>
+  @trail
+</head>
+</html>
+```
+
+Import the helper in your `.vue` files and enjoy perfect autocompletion and type-safety for both `route` and `current` methods.
 
 ```vue
 <script lang="ts" setup>

@@ -14,7 +14,8 @@ class TestCase extends TestbenchTestCase
     {
         parent::setUp();
 
-        Config::set('trail.path', sys_get_temp_dir() . '/trail');
+        Config::set('trail.output.routes', stream_get_meta_data(tmpfile())['uri']);
+        Config::set('trail.output.typescript', stream_get_meta_data(tmpfile())['uri']);
     }
 
     protected function getPackageProviders($app)

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Momentum\Trail\Trail;
 use function Pest\Laravel\artisan;
 use function PHPUnit\Framework\assertArrayHasKey;
 use function PHPUnit\Framework\assertFileExists;
@@ -16,19 +17,42 @@ beforeEach(function () {
     });
 });
 
+test('trail generates a list of defined routes', function () {
+    $definition = Trail::getRoutes();
+
+    $routes = [
+        'profile.settings.show',
+        'profile.settings.update',
+        'profile.security.show',
+        'profile.security.update',
+    ];
+
+    foreach ($routes as $route) {
+        assertArrayHasKey($route, $definition['routes']);
+    }
+})->only();
+
+test('trail generates a list of wildcard routes', function () {
+    $definition = Trail::getRoutes();
+
+    $wildcards = [
+        'profile.*',
+        'profile.settings.*',
+        'profile.security.*',
+    ];
+
+    foreach ($wildcards as $wildcard) {
+        assertArrayHasKey($wildcard, $definition['wildcards']);
+    }
+})->only();
+
 test('the command produces output files', function () {
     artisan('trail:generate')->assertSuccessful();
 
-    assertFileExists(config('trail.path') . '/index.ts');
-    assertFileExists(config('trail.path') . '/routes.json');
+    assertFileExists(config('trail.output.routes'));
+    assertFileExists(config('trail.output.typescript'));
 
-    sanitize();
-});
-
-test('the command generates a list of defined routes', function () {
-    artisan('trail:generate')->assertSuccessful();
-
-    $definition = json_decode(file_get_contents(config('trail.path') . '/routes.json'), true);
+    $definition = json_decode(file_get_contents(config('trail.output.routes')), true);
 
     $routes = [
         'profile.settings.show',
@@ -41,23 +65,6 @@ test('the command generates a list of defined routes', function () {
         assertArrayHasKey($route, $definition['routes']);
     }
 
-    sanitize();
-});
-
-test('the command generates a list of wildcard routes', function () {
-    artisan('trail:generate')->assertSuccessful();
-
-    $definition = json_decode(file_get_contents(config('trail.path') . '/routes.json'), true);
-
-    $wildcards = [
-        'profile.*',
-        'profile.settings.*',
-        'profile.security.*',
-    ];
-
-    foreach ($wildcards as $wildcard) {
-        assertArrayHasKey($wildcard, $definition['wildcards']);
-    }
-
-    sanitize();
-});
+    unlink(config('trail.output.routes'));
+    unlink(config('trail.output.typescript'));
+})->only();
