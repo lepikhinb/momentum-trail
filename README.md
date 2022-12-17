@@ -2,6 +2,8 @@
 
 Momentum Trail is a Laravel package that provides a TypeScript `route()` helper function that works like Laravel's, making it easy to use your Laravel named routes in TypeScript with auto-completion and type-safety.
 
+The package is built on top of [Ziggy](https://github.com/tighten/ziggy).
+
 - [**Installation**](#installation)
   - [**Laravel**](#laravel)
   - [**Vue 3**](#vue-3)
