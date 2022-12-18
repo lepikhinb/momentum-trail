@@ -6,7 +6,7 @@ The package is built on top of [Ziggy](https://github.com/tighten/ziggy).
 
 - [**Installation**](#installation)
   - [**Laravel**](#laravel)
-  - [**Vue 3**](#vue-3)
+  - [**Frontend**](#frontend)
 - [**Usage**](#usage)
 - [**Auto-generation**](#auto-generation)
 - [**Advanced Inertia**](#advanced-inertia)
@@ -40,9 +40,7 @@ return [
 
 Set the paths according to your directory structure. You can set the `routes` path to `null` in case you plan to use the `Blade` directive instead of importing JSON.
 
-### Vue 3
-
-> The frontend package is only for Vue 3 now due to its wide adoption within the Laravel community.
+### Frontend
 
 Install the [frontend package](https://github.com/lepikhinb/momentum-trail-helper).
 
@@ -60,7 +58,17 @@ Run the following command to generate TypeScript declarations and make your rout
 php artisan trail:generate
 ```
 
-Set up the `trail` plugin. You can either import the generated JSON definition and pass it to the plugin or use the `@trail` Blade directive and leave options empty.
+Register your routes on the frontend. You can either import the generated JSON definition and pass it to the `defineRoutes` method within the entry point (`app.ts`) or use the `@trail` Blade directive to register routes in the `window` object and make them available globally.
+
+```ts
+import { defineRoutes } from "momentum-trail"
+import routes from "./routes.json"
+
+defineRoutes(routes)
+```
+
+### Vue 3
+Alternatively, you can register routes using a Vue 3 plugin.
 
 ```ts
 import { trail } from "momentum-trail"
@@ -70,12 +78,11 @@ createInertiaApp({
   setup({ el, app, props, plugin }) {
     createApp({ render: () => h(app, props) })
       .use(trail, { routes })
-      // or
-      .use(trail)
   }
 })
 ```
 
+### Blade
 Optionally, add the `@trail` Blade directive to your main layout (before your application's JavaScript).
 
 > By default, the output of the @trail Blade directive includes a list of all your application's routes and their parameters. This route list is included in the HTML of the page and can be viewed by end users.
