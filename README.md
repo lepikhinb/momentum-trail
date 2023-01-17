@@ -132,7 +132,7 @@ For the complete documentation please refer to [Ziggy](https://github.com/tighte
 
 ### Auto-generation
 
-The package works best with [vite-plugin-watch](https://github.com/lepikhinb/momentum-paginator) plugin. You can set up the watcher to run the command on every file change.
+The package works best with [vite-plugin-watch](https://github.com/lepikhinb/vite-plugin-watch) plugin. You can set up the watcher to run the command on every file change.
 
 ```js
 import { defineConfig } from "vite"
