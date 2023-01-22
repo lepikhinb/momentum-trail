@@ -82,6 +82,26 @@ createInertiaApp({
 })
 ```
 
+####  Server-side rendering
+
+The SSR engine *doesn't know* the current URL you are requesting.
+
+To make the method `current` work correctly on the initial page load, you must pass the initial URL to the options list.
+
+```ts
+createServer((page: Page) =>
+  createInertiaApp({
+    setup({ App, props, plugin }) {
+      return createSSRApp({ render: () => h(App, props) })
+        .use(trail, {
+          routes,
+          url: props.initialPage.url
+        })
+    },
+  })
+)
+```
+
 ### Blade
 Optionally, add the `@trail` Blade directive to your main layout (before your application's JavaScript).
 
@@ -149,19 +169,21 @@ export default defineConfig({
 
 ## Advanced Inertia
 
-[<img src="https://advanced-inertia.com/og5.png" width="420px" />](https://advanced-inertia.com)
+[<img src="https://advanced-inertia.com/og.png" width="420px" />](https://advanced-inertia.com)
 
-Make Inertia-powered frontend a breeze to build and maintain with my upcoming book [Advanced Inertia](https://advanced-inertia.com/). Join the waitlist and get **20% off** when the book is out.
+Take your Inertia.js skills to the next level with my book [Advanced Inertia](https://advanced-inertia.com/).
+Learn advanced concepts and make apps with Laravel and Inertia.js a breeze to build and maintain.
 
 ## Momentum
 
-Momentum is a set of packages designed to bring back the feeling of working on a single codebase to Inertia-powered apps.
+Momentum is a set of packages designed to improve your experience building Inertia-powered apps.
 
 - [Modal](https://github.com/lepikhinb/momentum-modal) — Build dynamic modal dialogs for Inertia apps
 - [Preflight](https://github.com/lepikhinb/momentum-preflight) — Realtime backend-driven validation for Inertia apps
 - [Paginator](https://github.com/lepikhinb/momentum-paginator) — Headless wrapper around Laravel Pagination
 - [Trail](https://github.com/lepikhinb/momentum-trail) — Frontend package to use Laravel routes with Inertia
-- [Lock](https://github.com/lepikhinb/momentum-lock) — Frontend package to use Laravel permissions with Inertia _(coming soon)_
+- [Lock](https://github.com/lepikhinb/momentum-lock) — Frontend package to use Laravel permissions with Inertia
+- [Layout](https://github.com/lepikhinb/momentum-layout) — Persistent layouts for Vue 3 apps
 - [Vite Plugin Watch](https://github.com/lepikhinb/vite-plugin-watch) — Vite plugin to run shell commands on file changes
 
 ## Credits
