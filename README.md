@@ -159,10 +159,12 @@ import { defineConfig } from "vite"
 import { watch } from "vite-plugin-watch"
 
 export default defineConfig({
-    watch({
-      pattern: "routes/*.php",
-      command: "php artisan trail:generate",
-    }),
+    plugins: [
+      watch({
+        pattern: "routes/*.php",
+        command: "php artisan trail:generate",
+      }),
+    ],
   ],
 })
 ```
