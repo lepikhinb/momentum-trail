@@ -7,6 +7,7 @@ use Momentum\Trail\Trail;
 use function Pest\Laravel\artisan;
 use function PHPUnit\Framework\assertArrayHasKey;
 use function PHPUnit\Framework\assertFileExists;
+use Tightenco\Ziggy\Ziggy;
 
 beforeEach(function () {
     Route::prefix('profile')->name('profile.')->group(function () {
@@ -15,6 +16,9 @@ beforeEach(function () {
         Route::get('security', fn () => false)->name('security.show');
         Route::put('security', fn () => false)->name('security.update');
     });
+
+    // Other test cases may have called ziggy before, so we need to clear the route cache
+    Ziggy::clearRoutes();
 });
 
 test('trail generates a list of defined routes', function () {
