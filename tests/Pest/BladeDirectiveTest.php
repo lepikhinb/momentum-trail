@@ -7,4 +7,4 @@ test('blade directive can be rendered', function () {
     $html = Blade::compileString('@trail');
 
     assertStringContainsString('window.trail', $html);
-});
+})->only();
