@@ -8,3 +8,9 @@ test('blade directive can be rendered', function () {
 
     assertStringContainsString('window.trail', $html);
 });
+
+test('blade directive can be rendered with group', function () {
+    $html = Blade::compileString('@trail("admin")');
+
+    assertStringContainsString('window.trail', $html);
+});
