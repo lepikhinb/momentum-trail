@@ -15,6 +15,9 @@ beforeEach(function () {
         Route::get('security', fn () => false)->name('security.show');
         Route::put('security', fn () => false)->name('security.update');
     });
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::get('/', fn () => false)->name('index');
+    });
 });
 
 test('trail generates a list of defined routes', function () {
@@ -25,11 +28,25 @@ test('trail generates a list of defined routes', function () {
         'profile.settings.update',
         'profile.security.show',
         'profile.security.update',
+        'dashboard.index'
     ];
 
-    foreach ($routes as $route) {
-        assertArrayHasKey($route, $definition['routes']);
-    }
+    expect($definition['routes'])
+        ->toBeArray()
+        ->toHaveKeys($routes);
+
+})->only();
+
+test('trail generates a list of defined routes in a group', function () {
+    $definition = Trail::getRoutes('dashboard');
+
+    $routes = [
+        'dashboard.index'
+    ];
+
+    expect($definition['routes'])
+        ->toBeArray()
+        ->toHaveKeys($routes);
 })->only();
 
 test('trail generates a list of wildcard routes', function () {
@@ -39,11 +56,12 @@ test('trail generates a list of wildcard routes', function () {
         'profile.*',
         'profile.settings.*',
         'profile.security.*',
+        'dashboard.*'
     ];
 
-    foreach ($wildcards as $wildcard) {
-        assertArrayHasKey($wildcard, $definition['wildcards']);
-    }
+    expect($definition['wildcards'])
+        ->toBeArray()
+        ->toHaveKeys($wildcards);
 })->only();
 
 test('the command produces output files', function () {
