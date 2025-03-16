@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Momentum\Trail\Trail;
+
 use function Pest\Laravel\artisan;
 use function PHPUnit\Framework\assertArrayHasKey;
 use function PHPUnit\Framework\assertFileExists;

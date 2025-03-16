@@ -18,10 +18,12 @@ jobs:
       matrix:
         include:
           - laravel: 9
-            php: "8.0"
+            php: "8.1"
           - laravel: 10
             php: "8.2"
           - laravel: 11
+            php: "8.3"
+          - laravel: 12
             php: "8.3"
 
     steps:
@@ -48,10 +50,12 @@ jobs:
       matrix:
         include:
           - laravel: 9
-            php: "8.0"
+            php: "8.1"
           - laravel: 10
             php: "8.2"
           - laravel: 11
+            php: "8.3"
+          - laravel: 12
             php: "8.3"
 
     steps:
