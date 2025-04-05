@@ -34,6 +34,8 @@ class TrailServiceProvider extends ServiceProvider
 
     protected function registerDirective(): void
     {
-        Blade::directive('trail', fn () => TrailBladeGenerator::generate());
+        Blade::directive('trail', function ($group = null, $nonce = '') {
+            return "<?php echo app(\"" . TrailBladeGenerator::class . "\")->generate($group, $nonce); ?>";
+        });
     }
 }

@@ -6,9 +6,9 @@ use Tighten\Ziggy\Ziggy;
 
 class Trail
 {
-    public static function getRoutes(): array
+    public static function getRoutes($group = null): array
     {
-        $data = (new Ziggy)
+        $data = (new Ziggy($group))
             ->filter(['*debugbar.*', '*ignition.*'], false)
             ->toArray();
 
