@@ -2,7 +2,7 @@
 
 namespace Momentum\Trail;
 
-use Tightenco\Ziggy\Ziggy;
+use Tighten\Ziggy\Ziggy;
 
 class Trail
 {

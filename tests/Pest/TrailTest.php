@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Momentum\Trail\Trail;
+use Tighten\Ziggy\Ziggy;
+
 use function Pest\Laravel\artisan;
 use function PHPUnit\Framework\assertArrayHasKey;
 use function PHPUnit\Framework\assertFileExists;
-use Tightenco\Ziggy\Ziggy;
 
 beforeEach(function () {
     Route::prefix('profile')->name('profile.')->group(function () {
