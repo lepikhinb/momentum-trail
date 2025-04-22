@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Momentum\Trail\Trail;
+use Tighten\Ziggy\Ziggy;
 
 use function Pest\Laravel\artisan;
 use function PHPUnit\Framework\assertArrayHasKey;
@@ -16,6 +17,9 @@ beforeEach(function () {
         Route::get('security', fn () => false)->name('security.show');
         Route::put('security', fn () => false)->name('security.update');
     });
+
+    // Other test cases may have called ziggy before, so we need to clear the route cache
+    Ziggy::clearRoutes();
 });
 
 test('trail generates a list of defined routes', function () {
