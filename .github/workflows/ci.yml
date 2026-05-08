@@ -25,6 +25,8 @@ jobs:
             php: "8.3"
           - laravel: 12
             php: "8.3"
+          - laravel: 13
+            php: "8.3"
 
     steps:
       - name: Checkout code
@@ -56,6 +58,8 @@ jobs:
           - laravel: 11
             php: "8.3"
           - laravel: 12
+            php: "8.3"
+          - laravel: 13
             php: "8.3"
 
     steps:
